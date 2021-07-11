@@ -45,6 +45,19 @@ android {
             sonatypeHost = "S01"
         }
     }
+
+    publishing {
+        repositories {
+            maven {
+                name = "GithubPackages"
+                url = uri("https://maven.pkg.github.com/bandev/ueh")
+                credentials {
+                    username = System.getenv("USERNAME")
+                    password = System.getenv("GH_TOKEN")
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -65,17 +78,4 @@ dependencies {
     androidTestImplementation libs.androidxTestCore
     androidTestImplementation libs.androidxTestExt
     androidTestImplementation libs.espressoCore
-}
-
-afterEvaluate {
-    publishing {
-        publications {
-            WhatTheStack(MavenPublication) {
-                from components.release
-                groupId = "uk.bandev"
-                artifactId = "ueh"
-                version = "1.0.0"
-            }
-        }
-    }
 }
