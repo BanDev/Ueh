@@ -1,4 +1,4 @@
-package com.haroldadmin.whatthestack
+package uk.bandev.ueh
 
 internal class RootCauseException : Throwable() {
 

@@ -1,3 +1,3 @@
--keep class com.haroldadmin.whatthestack.WhatTheStackInitializer {
+-keep class uk.bandev.ueh.WhatTheStackInitializer {
   <init>();
 }

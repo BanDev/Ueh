@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'maven-publish'
+apply plugin: "com.vanniktech.maven.publish"
 
 android {
     compileSdkVersion buildConfig.compileSdk
@@ -38,6 +39,12 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    plugins.withId("com.vanniktech.maven.publish") {
+        mavenPublish {
+            sonatypeHost = "S01"
+        }
+    }
 }
 
 dependencies {
@@ -48,7 +55,7 @@ dependencies {
     implementation libs.coreKtx
     implementation libs.fragmentKtx
     implementation libs.constraintLayout
-    implementation libs.materialComponents
+    implementation 'com.google.android.material:material:1.4.0'
     implementation libs.startup
     implementation libs.insetter
 
@@ -65,9 +72,9 @@ afterEvaluate {
         publications {
             WhatTheStack(MavenPublication) {
                 from components.release
-                groupId = "com.github.haroldadmin"
-                artifactId = "WhatTheStack"
-                version = "0.3.1"
+                groupId = "uk.bandev"
+                artifactId = "ueh"
+                version = "1.0.0"
             }
         }
     }

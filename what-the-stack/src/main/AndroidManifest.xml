@@ -1,21 +1,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.haroldadmin.whatthestack">
+    package="uk.bandev.ueh">
     <application>
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
             android:exported="false"
             tools:node="merge">
-            <meta-data  android:name="com.haroldadmin.whatthestack.WhatTheStackInitializer"
+            <meta-data  android:name="uk.bandev.ueh.WhatTheStackInitializer"
                 android:value="androidx.startup" />
         </provider>
 
         <service
-            android:name=".WhatTheStackService"
+            android:name="uk.bandev.ueh.WhatTheStackService"
             android:process=":what_the_stack_process" />
         <activity
-            android:name=".WhatTheStackActivity"
+            android:name="uk.bandev.ueh.WhatTheStackActivity"
             android:theme="@style/Theme.WhatTheStackTheme"
             android:process=":what_the_stack_process" />
     </application>

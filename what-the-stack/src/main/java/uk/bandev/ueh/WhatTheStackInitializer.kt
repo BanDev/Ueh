@@ -1,4 +1,4 @@
-package com.haroldadmin.whatthestack
+package uk.bandev.ueh
 
 import android.content.Context
 import androidx.startup.Initializer

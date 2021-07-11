@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="header_text">Uncaught Exception</string>
+    <string name="header_text">Uncaught Exception Handler</string>
     <string name="explanation_text">An uncaught exception was thrown during the execution of your application</string>
     <string name="sample_stack_trace">
         2020-01-12 16:01:48.190 15365-15365/com.haroldadmin.crashyapp E/AndroidRuntime: FATAL EXCEPTION: main
@@ -36,4 +36,7 @@
     <string name="relaunch_app">Relaunch App</string>
     <string name="copied_message">Stacktrace copied!</string>
     <string name="search_stackoverflow">Stackoverflow</string>
+    <string name="bandev">BanDev</string>
+    <string name="unexpected_crash_occurred">Unexpected Crash Occurred</string>
+    <string name="report_crash">Report Crash</string>
 </resources>

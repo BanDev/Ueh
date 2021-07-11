@@ -9,4 +9,6 @@
   <color name="secondaryDarkColorTranslucent">#33373737</color>
   <color name="primaryTextColor">#ffffff</color>
   <color name="secondaryTextColor">#ffffff</color>
+  <color name="bandev">#5E17EB</color>
+  <color name="background">#F5F5F5</color>
 </resources>

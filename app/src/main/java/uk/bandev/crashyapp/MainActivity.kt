@@ -1,8 +1,8 @@
-package com.haroldadmin.crashyapp
+package uk.bandev.crashyapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.haroldadmin.crashyapp.databinding.ActivityMainBinding
+import uk.bandev.crashyapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 

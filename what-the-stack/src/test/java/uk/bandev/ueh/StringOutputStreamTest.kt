@@ -1,4 +1,4 @@
-package com.haroldadmin.whatthestack
+package uk.bandev.ueh
 
 import org.junit.Assert.*
 import org.junit.Test

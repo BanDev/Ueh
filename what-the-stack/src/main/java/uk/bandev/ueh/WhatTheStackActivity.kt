@@ -1,18 +1,21 @@
-package com.haroldadmin.whatthestack
+package uk.bandev.ueh
 
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.google.android.material.snackbar.Snackbar
-import com.haroldadmin.whatthestack.databinding.ActivityWhatTheStackBinding
 import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.windowInsetTypesOf
+import uk.bandev.ueh.databinding.CrashActivityBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * An Activity which displays various pieces of information regarding the exception which
@@ -20,7 +23,7 @@ import dev.chrisbanes.insetter.windowInsetTypesOf
  */
 class WhatTheStackActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityWhatTheStackBinding
+    private lateinit var binding: CrashActivityBinding
 
     private val clipboardManager: ClipboardManager by lazy {
         getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -28,7 +31,7 @@ class WhatTheStackActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityWhatTheStackBinding.inflate(layoutInflater)
+        binding = CrashActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -45,7 +48,7 @@ class WhatTheStackActivity : AppCompatActivity() {
         binding.stacktrace.apply {
             text = stackTrace
             setHorizontallyScrolling(true)
-            movementMethod = ScrollingMovementMethod()
+            movementMethod =   ScrollingMovementMethod()
         }
 
         binding.exceptionName.apply {
@@ -60,24 +63,23 @@ class WhatTheStackActivity : AppCompatActivity() {
             text = getString(R.string.exception_message, message)
         }
 
+        binding.reportGithub.apply {
+            setOnClickListener {
+                val release = packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES).versionName
+                val repo = getGithubRepoUrl(packageName)
+                val date = SimpleDateFormat("dd/M/yyyy hh:mm:ss", textLocale).format(Date())
+                val device = Build.MANUFACTURER + " " + Build.PRODUCT + " (" + Build.MODEL + ")"
+                val androidVersion = Build.VERSION.RELEASE + " (" + Build.VERSION.SDK_INT +")"
+                val uri = githubIssueUrl(repo, type!!, device, androidVersion, release, date, stackTrace!!)
+                startActivity(Intent(Intent.ACTION_VIEW, uri))
+            }
+        }
+
         binding.copyStacktrace.apply {
             setOnClickListener {
                 val clipping = ClipData.newPlainText("stacktrace", stackTrace)
                 clipboardManager.setPrimaryClip(clipping)
                 snackbar { R.string.copied_message }
-            }
-        }
-
-        binding.shareStacktrace.apply {
-            setOnClickListener {
-                val sendIntent: Intent = Intent().apply {
-                    this.action = Intent.ACTION_SEND
-                    this.putExtra(Intent.EXTRA_TEXT, stackTrace)
-                    this.type = "text/plain"
-                }
-
-                val shareIntent = Intent.createChooser(sendIntent, null)
-                startActivity(shareIntent)
             }
         }
 
@@ -91,19 +93,9 @@ class WhatTheStackActivity : AppCompatActivity() {
             }
         }
 
-        binding.searchStackoverflow.apply {
-            setOnClickListener {
-                val searchQuery = "$cause: $message"
-                val searchIntent: Intent = Intent().apply {
-                    this.action = Intent.ACTION_VIEW
-                    this.data = Uri.parse(generateStackoverflowSearchUrl(searchQuery))
-                }
-                startActivity(searchIntent)
-            }
-        }
     }
 
     private inline fun snackbar(messageProvider: () -> Int) {
-        Snackbar.make(binding.nestedScrollRoot, messageProvider(), Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(binding.root, messageProvider(), Snackbar.LENGTH_SHORT).show()
     }
 }

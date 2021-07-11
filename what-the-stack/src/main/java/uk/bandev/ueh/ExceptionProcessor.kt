@@ -1,4 +1,4 @@
-package com.haroldadmin.whatthestack
+package uk.bandev.ueh
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
